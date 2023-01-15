@@ -34,11 +34,11 @@ let encode str bits =
   let char_list = convert_string_to_list_reversed str in
   let rec encodestp str bits a r =
     match str with
-    |[] -> (from_int 0)
+    |[] -> []
     |[elt] -> (add_b (mult_b (from_int (code(elt))) a) r)
     |tete::reste -> encodestp reste bits (mult_b a (power [0;0;1] (from_int bits)))
                       (add_b (mult_b (from_int (code(tete))) a) r)
-  in encodestp char_list bits (from_int 1) (from_int 0);;
+  in encodestp char_list bits [0;1] [];;
 
 (** Decode a string containing ASCII characters.
     @param msg is an integer representing an encoded message.
@@ -57,3 +57,4 @@ let decode msg bits =
        (String.make 1 (chr (to_int reste))) ^ decodestp (diff_b msg (mult_b reste temp))
                                                 bits (puimax - 1)
      in decodestp msg bits puimax;;
+

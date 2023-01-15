@@ -22,7 +22,7 @@ let gcd_b bA bB =
 *)
 let bezout_b bA bB =
   let rec theoreme_mais_pas_de_pythagore bA bB =
-    if bB = (from_int 0) then (bA, (from_int 1), (from_int 0)) else
+    if bB = [] then (bA, [0; 1], []) else
       let (diviseur, nb1, nb2) = theoreme_mais_pas_de_pythagore bB (mod_b bA bB) in
       let (q, r) = div_b bA bB in (diviseur, nb2, (diff_b nb1 (mult_b q nb2)))
   in let (a, b, c) = theoreme_mais_pas_de_pythagore bA bB in (b, c, a);;

@@ -131,7 +131,7 @@ let rec last_two l = match l with
     @param upper bound for searched for prime bitarrays, a built-in integer.
     @param isprime function testing for (pseudo)primality.  *)
 let double_primes limit isprime =
-  if (to_int limit) < 2 then invalid_arg "Error [double_primes_scalable] : limit must be >= [0;1]" else
+  if (compare_b limit [0;0;1]) = (-1) then invalid_arg "Error [double_primes_scalable] : limit must be >= [0;1]" else
     let rec cherche_doublette n limit =
       if compare_b n limit = 1 then [] else
         if (isprime (add_b (mult_b n [0;0;1]) [0;1])) && (isprime n) then
@@ -139,19 +139,15 @@ let double_primes limit isprime =
         else cherche_doublette (add_b n [0;1]) limit
     in cherche_doublette [0;0;1] limit;;
 
-double_primes [0;0;0;1;0;1] is_prime;;
-
 (** Finding twin primes.
     @param upper bound for searched for prime bitarrays, a built-in integer..
     @param isprime function testing for (pseudo)primality.
  *)
 let twin_primes limit isprime =
-  if (to_int limit) < 2 then invalid_arg "Error [twin_primes_scalable] : limit must be >= [0;1]" else
+  if (compare_b limit [0;0;1]) = (-1) then invalid_arg "Error [twin_primes_scalable] : limit must be >= [0;1]" else
     let rec cherche_doublette n limit =
       if compare_b n limit = 1 then [] else
         if (is_prime (add_b n [0;0;1])) && is_prime n then
           (n, (add_b n [0;0;1]))::cherche_doublette (add_b n [0;1]) limit
         else cherche_doublette (add_b n [0;1]) limit
     in cherche_doublette [0;0;1] limit;;
-
-twin_primes [0;0;0;1;0;1] is_prime;;

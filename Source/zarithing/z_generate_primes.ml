@@ -26,7 +26,7 @@ let is_prime n =
     @param n upper limit of elements in the list of big integers.
  *)
 let init_eratosthenes n =
-  if n < (succ one) then invalid_arg "Error" else
+  if n < (succ one) then invalid_arg "Error [Z_init_eratosthenes] : n must be >= 2" else
     let depart = if n mod (succ one) = zero then (pred n) else n in
     let rec eratostos n liste x =
       if x >= (succ one) then eratostos n (x::liste) (pred (pred x)) else liste
@@ -38,7 +38,7 @@ let init_eratosthenes n =
     @param n limit of list of primes, starting at 2.
 *)
 let eratosthenes n =
-  if n < (succ one) then invalid_arg "Error" else
+  if n < (succ one) then invalid_arg "Error [Z_eratosthenes] : n must be >= 2" else
     if n = (succ (succ one)) then [(succ one); (succ (succ one))] else
       let liste = init_eratosthenes n in
       let rec eratostos n liste x =
@@ -109,10 +109,10 @@ let rec last_two l = match l with
     @param isprime function testing for (pseudo)primality.
  *)
 let double_primes limit isprime =
-  if limit < (succ one) then invalid_arg "Error" else
+  if limit < (succ one) then invalid_arg "Error [Z_double_primes] : limit must be >= 2" else
     let rec cherche_doublette n limit =
-      if n > limit then [] else
-        if isprime (succ (succ one)) && isprime n then
-          ((n, (succ (succ n)))::cherche_doublette (succ n) limit)
+      if compare n limit = 1 then [] else
+        if isprime (succ(mul (succ one) n)) && isprime n then
+          ((n, (succ(mul (succ one) n)))::cherche_doublette (succ n) limit)
         else cherche_doublette (succ n) limit
     in cherche_doublette (succ one) limit;;

@@ -169,14 +169,195 @@ let mod_b_tests () =
     in
     List.iter do_check cases
 
-let default_set =
+(*
+let scalable_set =
     [
-      ("From Int", `Quick, from_int_tests);
-      ("To Int", `Quick, to_int_tests);
-      ("Compare", `Quick, compare_b_tests);
-      ("Add B", `Quick, add_b_tests);
-      ("Diff B", `Quick, diff_b_tests);
-      ("Mult B", `Quick, mult_b_tests);
-      ("Quot B", `Quick, quot_b_tests);
-      ("Mod B", `Quick, mod_b_tests);
+      ("From Int O_o", `Quick, from_int_tests);
+      ("To Int o_O", `Quick, to_int_tests);
+      ("Compare O_O", `Quick, compare_b_tests);
+      ("Add B +_+", `Quick, add_b_tests);
+      ("Diff B -_-", `Quick, diff_b_tests);
+      ("Mult B *_*", `Quick, mult_b_tests);
+      ("Quot B /_/", `Quick, quot_b_tests);
+      ("Mod B %_%", `Quick, mod_b_tests);
     ]
+ *)
+
+
+(****************************************************************************)
+(****************************************************************************)
+
+
+let e_from_int_tests () =
+    let cases =
+        [(32, [0; 0; 0; 0; 0; 0; 1]); (-3, [1; 1; 1]); (7, [0; 1; 1; 1])]
+    and do_check (intgr , expected) =
+        check
+            (list int)
+            (sprintf "from_int: %i" intgr)
+            expected
+            (from_int intgr)
+    in
+    List.iter do_check cases
+
+let e_to_int_tests () =
+    let cases =
+        [([0; 0; 0; 0; 0; 0; 1], 32); ([1; 1; 1], -3); ([0; 1; 1; 1], 7)]
+    and do_check (bitarray , expected) =
+        check
+            (int)
+            (sprintf "to_int: %s" (string_of_intlist bitarray))
+            expected
+            (to_int bitarray)
+    in
+    List.iter do_check cases
+
+let e_bigger_tests () =
+    let cases =
+        [([0;0;1;0;0;1], [0;0;1;1;0;1]), false;
+         ([0;0;0;1;0;1], [0;1;0;0;0;1]), true;
+         ([0;1;0;0;0;1], [0;1;0;0;0;1]), false;
+         ([1;0;0;1;0;1], [1;1;1;0;0;1]), false;
+         ([1;0;1;0;0;1],[1;1;1;0;0;1]), true]
+    and do_check ((a, b), expected) =
+        check
+            (bool)
+            (sprintf "bigger_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (a >> b)
+    in
+    List.iter do_check cases
+
+let e_smaller_tests () =
+  let cases =
+    [([0;0;1;0;0;1], [0;0;1;1;0;1]), true;
+     ([0;0;0;1;0;1], [0;1;0;0;0;1]), false;
+     ([0;1;0;0;0;1], [0;1;0;0;0;1]), false;
+     ([1;0;0;1;0;1], [1;1;1;0;0;1]), true;
+     ([1;0;1;0;0;1],[1;1;1;0;0;1]), false]
+    and do_check ((a, b), expected) =
+        check
+            (bool)
+            (sprintf "smaller_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (a << b)
+    in
+    List.iter do_check cases
+
+
+let e_biggerEqual_tests () =
+  let cases =
+    [([0;0;1;0;0;1], [0;0;1;1;0;1]), false;
+     ([0;0;0;1;0;1], [0;1;0;0;0;1]), true;
+     ([0;1;0;0;0;1], [0;1;0;0;0;1]), true;
+     ([1;0;0;1;0;1], [1;1;1;0;0;1]), false;
+     ([1;0;1;0;0;1],[1;1;1;0;0;1]), true]
+    and do_check ((a, b), expected) =
+        check
+            (bool)
+            (sprintf "biggerEqual_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (a >>= b)
+    in
+    List.iter do_check cases
+
+let e_smallerEqual_tests () =
+    let cases =
+      [([0;0;1;0;0;1], [0;0;1;1;0;1]), true;
+       ([0;0;0;1;0;1], [0;1;0;0;0;1]), false;
+       ([0;1;0;0;0;1], [0;1;0;0;0;1]), true;
+       ([1;0;0;1;0;1], [1;1;1;0;0;1]), true;
+       ([1;0;1;0;0;1],[1;1;1;0;0;1]), false]
+    and do_check ((a, b), expected) =
+        check
+            (bool)
+            (sprintf "smallerEqual_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (a <<= b)
+    in
+    List.iter do_check cases
+
+let e_add_b_tests () =
+  let cases =
+    [([0;0;1;0;0;1], [0;0;1;1;0;1]), [0;0;0;0;1;0;1];
+     ([0;0;0;1;0;1], [0;1;0;0;0;1]), [0;1;0;1;0;0;1];
+     ([0;1;0;0;0;1], []), [0;1;0;0;0;1];
+     ([1;0;0;1;0;1], [0;0;0;1;0;1]), []]
+    and do_check ((a, b), expected) =
+        check
+            (list int)
+            (sprintf "add_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (add_b a b)
+    in
+    List.iter do_check cases
+
+let e_diff_b_tests () =
+  let cases =
+    [([0;0;1;0;0;1], [0;0;1;1;0;1]), [1;0;0;1];
+     ([0;0;0;1;0;1], [0;1;0;0;0;1]), [0;1;1];
+     ([0;1;0;0;0;1], []), [0;1;0;0;0;1];
+     ([1;0;0;1;0;1], [1;0;0;1;0;1]), []]
+    and do_check ((a, b), expected) =
+        check
+            (list int)
+            (sprintf "diff_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (diff_b a b)
+    in
+    List.iter do_check cases
+
+let e_mult_b_tests () =
+  let cases =
+    [([0;1], [0;0;1;1;0;1]), [0;0;1;1;0;1];
+     ([1;1], [0;0;1;1;0;1]), [1;0;1;1;0;1];
+     ([], [0;0;1;1;0;1]), [];
+     ([0;0;1], [0;1;0;0;0;1]), [0;0;1;0;0;0;1];
+     ([0;1;1], [0;1;1]), [0;1;0;0;1]]
+    and do_check ((a, b), expected) =
+        check
+            (list int)
+            (sprintf "mult_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (mult_b a b)
+    in
+    List.iter do_check cases
+
+let e_mod_b_tests () =
+  let cases =
+    [([0;1], [0;0;1;1;0;1]), [0;1];
+     ([0;1;0;1;0;1], [0; 0; 1]), [0;1];
+     ([0;0;1;1;0;1], [0; 0; 1]), [];
+     ([0;1;1;0;0;1], [0; 0; 0; 1]), [0; 1; 1]]
+  and do_check ((a, b), expected) =
+        check
+            (list int)
+            (sprintf "mod_b: %s and %s" (string_of_intlist a) (string_of_intlist b))
+            expected
+            (mod_b a b)
+    in
+    List.iter do_check cases
+
+(****************************************************************************)
+(****************************************************************************)
+
+let all_scalables_set =
+  [("From Int O_o", `Quick, from_int_tests);
+   ("To Int o_O", `Quick, to_int_tests);
+   ("Compare O_O", `Quick, compare_b_tests);
+   ("Add B +_+", `Quick, add_b_tests);
+   ("Diff B -_-", `Quick, diff_b_tests);
+   ("Mult B *_*", `Quick, mult_b_tests);
+   ("Quot B /_/", `Quick, quot_b_tests);
+   ("Mod B %_%", `Quick, mod_b_tests);
+   ("Casting to bitarray function", `Quick, e_from_int_tests);
+   ("Casting to int function", `Quick, e_to_int_tests);
+   ("Bigger bitarray function", `Quick, e_bigger_tests);
+   ("Smaller bitarray function", `Quick, e_smaller_tests);
+   ("Bigger or Equal bitarray function", `Quick, e_biggerEqual_tests);
+   ("Bigger or Equal bitarray function", `Quick, e_smallerEqual_tests);
+   ("add_b bitarray function", `Quick, e_add_b_tests);
+   ("diff_b or Equal bitarray function", `Quick, e_diff_b_tests);
+   ("mult_b or Equal bitarray function", `Quick, e_mult_b_tests);
+   ("mod_b or Equal bitarray function", `Quick, e_mod_b_tests);
+  ]

@@ -58,15 +58,6 @@ let mod_power x n m =
       if (modulo n 2) = 0 then puipui (modulo ((modulo x m)*(modulo x m)) m) (n/2) m
       else modulo ((modulo x m) * puipui (modulo x m) (n-1) m) m
   in puipui x n m;;
-  (*
-  if x = m then 0 else
-    let rec puipui x n m =
-      if n <= 0 then modulo x m else
-        if n = 2 then (modulo ((modulo x m)*(modulo x m)) m) else
-        if (modulo n 2) = 0 then modulo ((modulo ((modulo (x*sign x) m)*(modulo (x*sign x) m)) m)*(puipui (x*sign x) ((n-1)/2) m)) m
-        else
-          modulo ((modulo x m)* (puipui x (n-1) m)) m
-    in puipui x n m;;*)
 
 (*
 mod_power (-1) 12 10;; (* 1 *)
@@ -78,9 +69,7 @@ mod_power (-2) 2 5 (* 4 *);;
 mod_power (-2) 3 9 (* 1 *);;
 mod_power 2 5 17 (* 15 *);;
 mod_power 3 3 17 (* 10 *);;
-
 mod_power 2 10 11;;
-
 mod_power 9 12 10;;
 modulo (-1) 10;;
 mod_power (-1) 1 11;;
@@ -104,20 +93,6 @@ mod_power 281237 99400891 36199003;;
 let prime_mod_power x n p =
   if ((modulo x p = 0) || (n < p)) then mod_power x n p else
     mod_power x (modulo n (p-1)) p;;
-(*
-let prime_mod_power x n p =
-  let rec go x n p =
-  if n = 0 then 1 else
-    let temp = (modulo (go x (quot n 2) p) p)
-    in let temp = modulo (temp*temp) p in
-       if (modulo n 2 == 0) then temp else
-         modulo (x*temp) p
-  in go x n p;;
-
-let prime_mod_power x n p =
-  if ((modulo x p = 0) || (n < p)) then mod_power x n p else
-    let temp = modulo n (p-1) in
-    mod_power x temp p;;*)
 
 (*
 prime_mod_power (-10) 11 11;;

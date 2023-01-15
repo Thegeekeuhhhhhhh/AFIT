@@ -4,33 +4,6 @@
 #mod_use "builtin.ml";;
 *)
 open Builtin;;
-(*
-let sign x =
-  if x >= 0 then 1 else (-1);;
-
-let modulo a b =
-  if b = 0 then invalid_arg "Error [Modulo] : b can not be null" else
-    let b = b * sign b in
-    if a = 0 then 0 else
-      if a < 0 then let rec modneg a b =
-                      if a >= 0 then a else modneg (a+b) b
-                    in modneg a b
-      else let rec modpos a b =
-             if a < 0 then (a+b) else modpos (a-b) b
-           in modpos a b;;
-
-let quot a b =
-  if b = 0 then invalid_arg "Error [quot] : b can not be null" else
-    if a = 0 then 0 else
-      let rec calcul_quotient a b q =
-        if (a-b) >= 0 then calcul_quotient (a-b) b (q+1) else q
-      in let resultat = if a > 0 then (calcul_quotient (a*sign a) (b*sign b) 0)*(sign b) else
-                          ((calcul_quotient (a*sign a) (b*sign b) 0)+1)*(sign b)*(-1) in
-         if (resultat+1)*b = a then resultat+1 else resultat;;
-
-let div a b =
-  let q = (quot a b) and r = (modulo a b) in
-  (q, r);;*)
 
 (** Greater common (positive) divisor of two non-zero integers.
     @param a non-zero integer
@@ -38,14 +11,6 @@ let div a b =
  *)
 let rec gcd a b =
   if b = 0 then a else (gcd b (modulo a b));;
-(*
-  let (a, b) = ((a * sign a), (b * sign b)) in
-  let (a, b) = if a < b then (b, a) else (a, b) in
-  let pgcd = modulo a b in
-  match pgcd with
-  |0 -> b
-  |y -> gcd b y;;
- *)
 
 (*
 gcd 32 6;;

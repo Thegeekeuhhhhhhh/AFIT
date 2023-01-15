@@ -34,6 +34,10 @@ let generate_keys_rsa p q = (* (([],[]), ([], [])) *)
  *)
 let encrypt_rsa m (n, e) = prime_mod_power m e n;;
 
+(*
+encrypt_rsa (from_int 281237) ((from_int 99400891), (from_int 36199003));;
+ *)
+
 (** Decryption using RSA cryptosystem.
     @param m bitarray hash of encrypted message.
     @param pub_key a tuple (n, d) composing private key of RSA cryptosystem.
@@ -46,7 +50,7 @@ let decrypt_rsa m (n , d) = prime_mod_power m d n;;
     where p is a prime bitarray and g a bitarray having high enough order modulo p.
     @param p is a prime bitarray having form 2*q + 1 for prime bitarray q.
  *)
-let rec public_data_g p = (* ([], []) *)
+let rec public_data_g p =
   let q = (quot_b (diff_b p [0;1]) [0;0;1]) in
   let rec calcule_data n p q =
     if (prime_mod_power n q p) = [0;1] then (n, p) else if (prime_mod_power n (mult_b q [0;0;1]) p) = [0;1]

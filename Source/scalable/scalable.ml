@@ -71,15 +71,13 @@ let reverse_liste list =
 *)
 let from_int x =
   if x = 0 then [] else
-    let rec transform x =
-      if x = 1 then [1] else
-        if (modulo x 2) = 0 then 0::(transform (quot x 2))
-        else 1::(transform (quot x 2))
-    in if x >= 0 then 0::(transform x)
-       else 1::(transform (x*sign x));;
+  let rec transform x =
+    if x = 0 then [] else
+      (x mod 2)::(transform ((x-(x mod 2))/2))
+  in if x < 0 then 1::(transform (-x)) else 0::(transform x);;
 
-(*
-from_int 168385758548735;;
+from_int 0;;
+(*from_int 168385758548735;;
 to_int [0; 1; 1; 1; 0; 0; 0; 1; 0; 1; 1; 1; 1; 1; 0; 1; 1; 0; 1; 1; 1; 1; 0; 1; 0;
  0; 0; 1; 0; 1; 1; 1; 0; 0; 0; 0; 1; 1; 1; 0; 0; 0; 1; 1; 0; 0; 0; 0; 1; 0;
  0; 1; 1; 0; 1; 1; 0; 1; 1; 1; 0; 1];;

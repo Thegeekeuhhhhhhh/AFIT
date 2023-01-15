@@ -75,36 +75,6 @@ init_eratosthenes 8;;
     @param n limit of list of primes, starting at 2.
  *)
 
-(*
-let mod_power x n m =
-  let rec puipui x n m =
-    if n = 0 then 1 else
-      modulo ((modulo x m)* puipui x (n-1) m) m
-  in puipui x n m;;
-
-let prime_mod_power x n p =
-  if ((modulo x p = 0) || (n < p)) then mod_power x n p else
-    let temp = modulo n (p-1) in
-    mod_power x temp p;;
-
-let is_prime n =
-  let max = int_of_float(sqrt(float_of_int(n))) in
-  let rec test_premier n max =
-    if max = 1 then true else
-      if modulo n max = 0 then false else
-        test_premier n (max-1)
-  in test_premier n max;;
-
-let is_pseudo_prime p test_seq =
-  let rec let_s_go p test_seq =
-    match test_seq with
-    |[] -> true
-    |tete::reste -> if ((p = tete) && (is_prime p)) then true else
-                      if (prime_mod_power tete (p-1) p) <> 1 then
-                        false else let_s_go p reste
-  in let_s_go p test_seq;;
- *)
-
 let eratosthenes n =
   if n < 2 then invalid_arg "Error [eratosthenes] : n must be >= 2" else
     if n = 3 then [2; 3] else

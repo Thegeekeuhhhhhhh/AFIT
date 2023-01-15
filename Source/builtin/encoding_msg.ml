@@ -44,17 +44,6 @@ let encode str bits =
     |tete::reste -> encodestp reste bits (a*(power 2 bits)) ((code (tete))*a + r)
   in encodestp char_list bits 1 0;;
 
-      (*
-  let bit_max = power 2 bits and longueur = ((String.length str)-1) in
-  let rec encoding mot bit_max nombre_final itera mot_length =
-    if itera > mot_length then nombre_final else
-      let valeur = int_of_char(str.[itera]) in
-      let new_val = (modulo valeur bit_max) in
-      let long = int_length new_val in
-      encoding mot bit_max ((nombre_final*(power 10 long)) + new_val) (itera+1) mot_length
-  in encoding str bit_max 0 0 longueur;;
-   *)
-
 (*
 encode "Bashar" 7;;
  *)
@@ -80,9 +69,3 @@ decode 2294023860466 7;;
 34359738368 * 66;;
 2294023860466+34359738368;;
  *)
-(*
-    match str with
-    |[elt] -> ((code (elt))*a + r)
-    |tete::reste -> encodestp reste bits (a*(power 2 bits)) ((code (tete))*a + r)
-  in encodestp char_list bits 1 0;;
-                                              *)
