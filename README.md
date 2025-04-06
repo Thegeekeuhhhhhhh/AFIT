@@ -1,7 +1,6 @@
-Bonjour, cette version du projet AFIT contient tout ce qu'il faut pour le finir à 200%.
-Nous sommes le Dimanche 15 Janvier, le réel rendu final était programmé pour le Dimanche 18 Décembre mais voilà (On est en 2022 d'ailleurs)
+# What is it ?
+- AFIT is a solo project where we had to discover and manipulate Encryptions / Decryptions algorithms in OCaml
 
-Builtin, scalable et même Zarithing sont complétés à 100%, à l'exception du fichier chinese_remaindert (Théorème des restes chinois) parce que j'ai rien compris.
-La test suite est entièrement faite / refaite, les tests sur le chapitre scalable se comptent par centaines. La test suite de Zarithing est complète.
-
-Merci de m'avoir fait vivre un si bon moment, j'ai adoré le projet :)
+## Warning
+- Copying this project or parts of exercises is totally forbidden, you will be the only responsible.
+- Do not forget that this project aims to discover cryptosystems, so cheating is completely useless.
